@@ -1,0 +1,17 @@
+<div class="pixel-info-popup-div"
+     style="cursor: crosshair; pointer-events: none;"
+     [style.left]="x + 'px'"
+     [style.top]="y + 'px'">
+    <canvas #imageMagnifierCanvas
+            style="object-fit: fill; width: 98px; height: 98px;"
+            [width]="scaledImageSize"
+            [height]="scaledImageSize"
+            class="pixelated position-absolute"></canvas>
+    <div class="position-relative" style="border: 1px solid #90a4ae;"
+         [style.width]="currentPixelBorder.width"
+         [style.height]="currentPixelBorder.width"
+         [style.left]="currentPixelBorder.left"
+         [style.top]="currentPixelBorder.left">
+
+    </div>
+</div>

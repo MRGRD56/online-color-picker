@@ -1,0 +1,14 @@
+.sidebar-root-div {
+    width: 100%;
+
+    @media (min-width: 992px) {
+        height: 100%;
+        width: 280px;
+    }
+}
+
+.site-icon {
+    width: 40px;
+    font-size: 30px;
+    padding: 0 8px;
+}

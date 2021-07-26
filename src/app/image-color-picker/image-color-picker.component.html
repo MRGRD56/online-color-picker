@@ -1,0 +1,14 @@
+<div class="image-canvas-wrapper w-100 h-100">
+    <canvas #imageCanvas
+            class="image-canvas"
+            style="object-fit: contain; object-position: top; max-width: 100%; max-height: 100%;"
+            (click)="canvasOnMouseClick($event)"
+            (mousemove)="canvasOnMouseMove($event)"
+            (mouseover)="canvasOnMouseOver($event)"
+            (mouseout)="canvasOnMouseOut($event)">
+    </canvas>
+    <app-pixel-info-popup #appPixelInfoPopup
+                          class="pixelated"
+                          *ngIf="isMouseOverImage">
+    </app-pixel-info-popup>
+</div>

@@ -1,0 +1,27 @@
+<div class="sidebar-root-div d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+    <a href="/" class="d-flex align-items-center me-md-auto text-white text-decoration-none">
+        <div class="bi me-2 material-icons unselectable site-icon">palette</div>
+        <span class="fs-4">Color Picker</span>
+    </a>
+    <hr>
+    <div class="nav nav-pills mb-auto">
+        <div class="selected-pixel-info-wrapper flex-column" *ngIf="colorPickerImageService.selectedPixel">
+            <div>
+                <label>
+                    HEX
+                    <input class="form-control dark-element" type="text" [value]="colorPickerImageService.selectedPixel?.hex" readonly>
+                </label>
+            </div>
+            <div class="mt-3">
+                <label>
+                    RGB
+                    <input class="form-control dark-element" type="text" [value]="colorPickerImageService.selectedPixel?.rgb" readonly>
+                </label>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="dropdown">
+        <input class="form-control bg-dark text-light border-secondary" type="file" id="formFile">
+    </div>
+</div>

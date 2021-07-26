@@ -1,16 +1,22 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
+import { SidebarComponent } from "./sidebar/sidebar.component";
+import { ImageColorPickerComponent } from './image-color-picker/image-color-picker.component';
+import { PixelInfoPopupComponent } from './pixel-info-popup/pixel-info-popup.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SidebarComponent,
+        ImageColorPickerComponent,
+        PixelInfoPopupComponent
+    ],
+    imports: [
+        BrowserModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
