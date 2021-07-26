@@ -1,7 +1,9 @@
 <div class="pixel-info-popup-div"
      style="cursor: crosshair; pointer-events: none;"
      [style.left]="x + 'px'"
-     [style.top]="y + 'px'">
+     [style.top]="y + 'px'"
+     [style.width]="elementSize.width + 'px'"
+     [style.height]="elementSize.height + 'px'">
     <canvas #imageMagnifierCanvas
             style="object-fit: fill; width: 98px; height: 98px;"
             [width]="scaledImageSize"

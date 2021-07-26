@@ -8,10 +8,18 @@ import {ColorPickerImageService} from "../../services/color-picker-image.service
 })
 export class PixelInfoPopupComponent implements AfterViewInit {
     public get x(): number {
-        return this.colorPickerImageService.hoveredPixel?.screenPosition.x ?? 0;
+        let cursorPositionX = this.colorPickerImageService.hoveredPixel?.screenPosition.x ?? 0;
+        if (this.elementSize && cursorPositionX >= document.documentElement.scrollWidth - this.elementSize.width) {
+            cursorPositionX -= this.elementSize.width;
+        }
+        return cursorPositionX;
     }
     public get y(): number {
-        return this.colorPickerImageService.hoveredPixel?.screenPosition.y ?? 0;
+        let cursorPositionY = this.colorPickerImageService.hoveredPixel?.screenPosition.y ?? 0;
+        if (this.elementSize && cursorPositionY >= document.documentElement.scrollHeight - this.elementSize.height) {
+            cursorPositionY -= this.elementSize.height;
+        }
+        return cursorPositionY;
     }
 
     public readonly scaledImageSize: number = 7;
@@ -23,7 +31,10 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         };
     }
 
-    constructor(private readonly colorPickerImageService: ColorPickerImageService) {
+    public readonly elementSize = { width: 100, height: 140 };
+
+    constructor(private readonly colorPickerImageService: ColorPickerImageService,
+                private readonly elementRef: ElementRef<HTMLElement>) {
     }
 
     @ViewChild("imageMagnifierCanvas")
