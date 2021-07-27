@@ -36,3 +36,7 @@ html, body, main {
 .font-mono {
     font-family: "JetBrains Mono", "Consolas", monospace;
 }
+
+app-image-color-picker {
+    width: calc(100% - 280px);
+}

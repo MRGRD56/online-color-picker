@@ -9,14 +9,18 @@ import {ColorPickerImageService} from "../../services/color-picker-image.service
 export class PixelInfoPopupComponent implements AfterViewInit {
     public get x(): number {
         let cursorPositionX = this.colorPickerImageService.hoveredPixel?.screenPosition.x ?? 0;
-        if (this.elementSize && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientX >= window.innerWidth - this.elementSize.width) {
+        if (this.colorPickerImageService?.hoveredPixel
+            && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientX
+            >= window.innerWidth - this.elementSize.width) {
             cursorPositionX -= this.elementSize.width;
         }
         return cursorPositionX;
     }
     public get y(): number {
         let cursorPositionY = this.colorPickerImageService.hoveredPixel?.screenPosition.y ?? 0;
-        if (this.elementSize && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientY >= window.innerHeight - this.elementSize.height) {
+        if (this.colorPickerImageService?.hoveredPixel
+            && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientY
+            >= window.innerHeight - this.elementSize.height) {
             cursorPositionY -= this.elementSize.height;
         }
         return cursorPositionY;
@@ -31,7 +35,7 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         };
     }
 
-    public readonly elementSize = { width: 100, height: 140 };
+    public readonly elementSize = { width: 100, height: 130 };
 
     constructor(public readonly colorPickerImageService: ColorPickerImageService) {
     }

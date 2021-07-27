@@ -16,7 +16,15 @@ export class ImageColorPickerComponent implements AfterViewInit {
         return this.imageCanvasRef.nativeElement;
     }
 
+    @ViewChild("imageCanvasWrapper")
+    private imageCanvasWrapperRef!: ElementRef<HTMLDivElement>;
+    private get imageCanvasWrapper(): HTMLDivElement {
+        return this.imageCanvasWrapperRef.nativeElement;
+    }
+
     private imageCanvasContext!: CanvasRenderingContext2D;
+
+    public isDragging = false;
 
     constructor(private readonly colorPickerImageService: ColorPickerImageService) {
 
@@ -35,6 +43,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
             this.colorPickerImageService.currentImageElement.onload = () => {
                 this.imageCanvas.width = this.colorPickerImageService.currentImageElement!.width;
                 this.imageCanvas.height = this.colorPickerImageService.currentImageElement!.height;
+                this.imageCanvasContext.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
                 this.imageCanvasContext.drawImage(this.colorPickerImageService.currentImageElement!, 0, 0);
             };
             this.colorPickerImageService.currentImageElement.src = imageUrl;
@@ -43,8 +52,29 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     public isMouseOverImage: boolean = false;
 
+    private previousMouseMovement?: MouseEvent;
+
     public canvasOnMouseMove(e: MouseEvent) {
         this.colorPickerImageService.hoveredPixel = this.getPixelFromMouseEvent(e);
+        if (this.isMouseDown && this.mouseDownPosition && this.previousMouseMovement) {
+            const shiftFromStart = new Point(
+                e.clientX - this.mouseDownPosition.clientX,
+                e.clientY - this.mouseDownPosition.clientY
+            );
+            const shift = new Point(
+                e.clientX - this.previousMouseMovement.clientX,
+                e.clientY - this.previousMouseMovement.clientY
+            );
+            if (!this.isDragging && Math.sqrt(Math.pow(shiftFromStart.x, 2) + Math.pow(shiftFromStart.y, 2)) > 5) {
+                this.isDragging = true;
+            }
+            if (this.isDragging) {
+                this.imageCanvasWrapper.scrollLeft -= shift.x;
+                this.imageCanvasWrapper.scrollTop -= shift.y;
+            }
+        }
+
+        this.previousMouseMovement = e;
     }
 
     public canvasOnMouseClick(e: MouseEvent) {
@@ -57,6 +87,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     public canvasOnMouseOut(e: MouseEvent) {
         this.isMouseOverImage = false;
+        this.isMouseDown = false;
     }
 
     private static getCanvasRelativePosition(canvasElement: HTMLCanvasElement, mouseEvent: MouseEvent): Point {
@@ -82,5 +113,32 @@ export class ImageColorPickerComponent implements AfterViewInit {
             rgb: rgbColor,
             mouseEvent: e
         };
+    }
+
+    private _isMouseDown = false;
+    get isMouseDown(): boolean {
+        return this._isMouseDown;
+    }
+    set isMouseDown(value: boolean) {
+        this._isMouseDown = value;
+        if (!this._isMouseDown) {
+            this.isDragging = false;
+        }
+    }
+
+    private mouseDownPosition?: MouseEvent | null;
+
+    canvasOnMouseDown(e: MouseEvent) {
+        if (!this.isMouseDown) {
+            this.isMouseDown = true;
+            this.mouseDownPosition = e;
+        }
+    }
+
+    canvasOnMouseUp(e: MouseEvent) {
+        if (this.isMouseDown) {
+            this.isMouseDown = false;
+            this.mouseDownPosition = null;
+        }
     }
 }

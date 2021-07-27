@@ -1,14 +1,16 @@
-<div class="image-canvas-wrapper">
+<div #imageCanvasWrapper class="image-canvas-wrapper" [style.cursor]="isDragging ? 'grab' : 'crosshair'">
     <canvas #imageCanvas
             class="image-canvas"
             style="object-fit: contain; object-position: top;"
             (click)="canvasOnMouseClick($event)"
             (mousemove)="canvasOnMouseMove($event)"
             (mouseover)="canvasOnMouseOver($event)"
-            (mouseout)="canvasOnMouseOut($event)">
+            (mouseout)="canvasOnMouseOut($event)"
+            (mousedown)="canvasOnMouseDown($event)"
+            (mouseup)="canvasOnMouseUp($event)">
     </canvas>
     <app-pixel-info-popup #appPixelInfoPopup
                           class="pixelated"
-                          *ngIf="isMouseOverImage">
+                          *ngIf="isMouseOverImage && !isDragging">
     </app-pixel-info-popup>
 </div>
