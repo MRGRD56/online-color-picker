@@ -2,10 +2,10 @@
 
 html, body, main {
     min-height: 100%;
-
-    @media (min-width: 992px) {
-        height: 100%;
-    }
+    height: 100%;
+    //@media (min-width: 992px) {
+    //
+    //}
 }
 
 .unselectable {
@@ -38,6 +38,38 @@ html, body, main {
     font-family: "JetBrains Mono", "Consolas", monospace;
 }
 
+@media (min-width: 992px) {
+    app-sidebar {
+        border-right: 1px solid #37474f;
+    }
+}
+
 app-image-color-picker {
-    width: calc(100% - 300px);
+    width: 100%;
+
+    @media (min-width: 992px) {
+        width: calc(100% - 301px);
+    }
+}
+
+button.flat-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+button.flat-btn.flat-btn-teal {
+    color: #26a69a;
+
+    &:hover {
+        color: #00897b;
+    }
+}
+
+button.flat-btn.flat-btn-light {
+    color: #90a4ae;
+
+    &:hover {
+        color: #607d8b;
+    }
 }
