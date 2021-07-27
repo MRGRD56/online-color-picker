@@ -4,11 +4,13 @@
      [style.top]="y + 'px'"
      [style.width]="elementSize.width + 'px'"
      [style.height]="elementSize.height + 'px'">
-    <div class="canvas-wrapper" style="width: 98px; height: 98px;">
+    <div class="canvas-wrapper" [style.width]="elementSize.width - 2 + 'px'" [style.height]="elementSize.width - 2 + 'px'">
         <canvas #imageMagnifierCanvas
-                style="object-fit: fill; width: 98px; height: 98px;"
+                style="object-fit: fill;"
                 [width]="scaledImageSize"
                 [height]="scaledImageSize"
+                [style.width]="elementSize.width - 2 + 'px'"
+                [style.height]="elementSize.width - 2 + 'px'"
                 class="pixelated position-absolute"></canvas>
         <div class="position-relative" style="border: 1px solid #90a4ae;"
              [style.width]="currentPixelBorder.width"
@@ -18,7 +20,7 @@
 
         </div>
     </div>
-    <div class="d-flex align-items-center" style="margin: 5px 8px;" *ngIf="colorPickerImageService?.hoveredPixel">
+    <div class="d-flex align-items-center" style="height: 30px; margin-left: 7px; margin-right: 7px;" *ngIf="colorPickerImageService?.hoveredPixel">
         <div [style.backgroundColor]="colorPickerImageService.hoveredPixel!.hex"
              style="width: 15px; height: 15px; border: 1px solid #37474f;"></div>
         <div class="text-light font-mono" style="font-size: 14px; margin-left: 5px;">

@@ -1,7 +1,8 @@
-<div #imageCanvasWrapper class="image-canvas-wrapper" [style.cursor]="isDragging ? 'grab' : 'crosshair'">
+<div #imageCanvasWrapper class="image-canvas-wrapper">
     <canvas #imageCanvas
             class="image-canvas"
             style="object-fit: contain; object-position: top;"
+            [style.cursor]="isDragging ? 'grab' : 'crosshair'"
             (click)="canvasOnMouseClick($event)"
             (mousemove)="canvasOnMouseMove($event)"
             (mouseover)="canvasOnMouseOver($event)"

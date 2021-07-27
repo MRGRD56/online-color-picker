@@ -26,16 +26,22 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         return cursorPositionY;
     }
 
-    public readonly scaledImageSize: number = 7;
+    public readonly scaledImageSize: number = 11;
+
+    public readonly elementSize = {
+        width: 150,
+        get height(): number {
+            return this.width + 30;
+        }
+    };
 
     public get currentPixelBorder() {
+        const onePixelWidth = (this.elementSize.width - 2) / this.scaledImageSize;
         return {
-            width: 98 / this.scaledImageSize + 'px',
-            left: Math.floor(49 - this.scaledImageSize) + 'px'
+            width: onePixelWidth + 'px',
+            left: onePixelWidth * Math.floor(this.scaledImageSize / 2) + 'px'
         };
     }
-
-    public readonly elementSize = { width: 100, height: 130 };
 
     constructor(public readonly colorPickerImageService: ColorPickerImageService) {
     }
