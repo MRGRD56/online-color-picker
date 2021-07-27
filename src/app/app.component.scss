@@ -1,0 +1,24 @@
+@import "~bootstrap";
+
+.settings-grid {
+    @extend .col;
+
+    &>div {
+        @extend .row;
+        @extend .m-1;
+        min-height: 45px;
+
+        &>.setting-label {
+            @extend .col-4;
+            @extend .me-2;
+            @extend .d-flex;
+            @extend .align-items-center;
+        }
+
+        &>.setting-value {
+            @extend .col;
+            @extend .d-flex;
+            @extend .align-items-center;
+        }
+    }
+}

@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {ColorFormat} from "../../models/ColorFormat";
+import {ColorMode} from "../../models/ColorMode";
 
 @Injectable({
     providedIn: 'root'
@@ -6,16 +8,26 @@ import {Injectable} from '@angular/core';
 export class AppSettingsService {
     public pixelInfoPopup = {
         scaledImageSize: 11,
-        elementSize: {
-            width: 150,
-            get height(): number {
-                return this.width + 30;
-            }
+        elementWidth: 150,
+        get elementSize(): { width: number, height: number } {
+            return {
+                width: this.elementWidth,
+                get height(): number {
+                    return this.width + 30;
+                }
+            };
         }
     };
 
-    public colorPicker = {
+    public colorPicker: {
+        isReversedDragScrolling: boolean,
+        dragScrollingSpeed: number,
+        autoCopyColor: ColorFormat | null,
+        colorMode: ColorMode
+    } = {
         isReversedDragScrolling: false,
-        dragScrollingSpeed: 1
+        dragScrollingSpeed: 1,
+        autoCopyColor: null,
+        colorMode: ColorMode.Rgb
     }
 }

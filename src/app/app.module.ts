@@ -6,6 +6,7 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ImageColorPickerComponent } from './image-color-picker/image-color-picker.component';
 import { PixelInfoPopupComponent } from './pixel-info-popup/pixel-info-popup.component';
 import { UploadImageComponent } from './load-image/upload-image.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { UploadImageComponent } from './load-image/upload-image.component';
         UploadImageComponent
     ],
     imports: [
-        BrowserModule
+        BrowserModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

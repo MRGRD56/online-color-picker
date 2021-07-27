@@ -8,6 +8,49 @@
     </div>
 </div>
 
+<div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark-element">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="settings-modal-label">Settings</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-secondary">
+                <div class="settings-grid">
+                    <div>
+                        <div class="setting-label">Scaled image size</div>
+                        <div class="setting-value">
+                            <input type="number" min="3" max="99" step="2" class="dark-element form-control"
+                                   [(ngModel)]="appSettings.pixelInfoPopup.scaledImageSize">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Magnifier width</div>
+                        <div class="setting-value">
+                            <input type="number" min="50" max="500" step="10" class="dark-element form-control"
+                            [(ngModel)]="appSettings.pixelInfoPopup.elementWidth">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Auto color copy</div>
+                        <div class="setting-value">
+                            <select class="dark-element form-control"
+                                    [(ngModel)]="appSettings.colorPicker.autoCopyColor">
+                                <option [ngValue]="null">None</option>
+                                <option [ngValue]="0">HEX</option>
+                                <option [ngValue]="1">RGB</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            <div class="modal-footer border-secondary">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
 
 <main class="flex-column flex-lg-row"
       [style.display]="colorPickerImageService.isImageLoaded ? 'flex' : 'none'">

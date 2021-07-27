@@ -2,11 +2,16 @@ import {Injectable} from '@angular/core';
 import Pixel from "../../models/Pixel";
 import {Observable, Observer, Subscriber} from "rxjs";
 import Modals from "../Modals";
+import {AppSettingsService} from "../app-settings/app-settings.service";
+import {ColorFormat} from "../../models/ColorFormat";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ColorPickerImageService {
+    constructor(private readonly appSettings: AppSettingsService) {
+    }
+
     private _currentImage?: string;
 
     public get currentImage() {
@@ -92,5 +97,21 @@ export class ColorPickerImageService {
     set selectedPixel(value: Pixel | null | undefined) {
         this._selectedPixel = value;
         this.selectedPixelChangedSubscriber?.next(value);
+        if (this._selectedPixel && this.appSettings.colorPicker.autoCopyColor !== null) {
+            const getTextToCopy = () => {
+                switch (this.appSettings.colorPicker.autoCopyColor) {
+                    case ColorFormat.Hex:
+                        return this._selectedPixel?.hex;
+                    case ColorFormat.Rgb:
+                        return this._selectedPixel?.rgb;
+                    default:
+                        return null;
+                }
+            };
+            const textToCopy = getTextToCopy();
+            if (textToCopy == null) return;
+
+            navigator.clipboard.writeText(textToCopy);
+        }
     }
 }
