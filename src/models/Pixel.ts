@@ -5,4 +5,5 @@ export default interface Pixel {
     position: Point;
     hex: string;
     rgb: string;
+    mouseEvent: MouseEvent;
 }

@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ColorPickerImageService} from "../../services/color-picker-image.service";
 import Point from "../../models/Point";
 import Pixel from "../../models/Pixel";
+import {rgbToHex} from "../../main";
 
 @Component({
     selector: 'app-image-color-picker',
@@ -59,21 +60,27 @@ export class ImageColorPickerComponent implements AfterViewInit {
     }
 
     private static getCanvasRelativePosition(canvasElement: HTMLCanvasElement, mouseEvent: MouseEvent): Point {
-        const canvasElementBoundingClientRect = canvasElement.getBoundingClientRect();
-        const canvasSize = { width: canvasElement.width, height: canvasElement.height };
-        const canvasElementSize = { width: canvasElementBoundingClientRect.width, height: canvasElementBoundingClientRect.height };
-        const canvasElementRelativeCursorPosition = new Point(mouseEvent.offsetX, mouseEvent.offsetY);
-        return new Point(
-            canvasSize.width / canvasElementSize.width * canvasElementRelativeCursorPosition.x,
-            canvasSize.height / canvasElementSize.height * canvasElementRelativeCursorPosition.y);
+        // const canvasElementBoundingClientRect = canvasElement.getBoundingClientRect();
+        // const canvasSize = { width: canvasElement.width, height: canvasElement.height };
+        // const canvasElementSize = { width: canvasElementBoundingClientRect.width, height: canvasElementBoundingClientRect.height };
+        // const canvasElementRelativeCursorPosition = new Point(mouseEvent.offsetX, mouseEvent.offsetY);
+        // return new Point(
+        //     canvasSize.width / canvasElementSize.width * canvasElementRelativeCursorPosition.x,
+        //     canvasSize.height / canvasElementSize.height * canvasElementRelativeCursorPosition.y);
+        return new Point(mouseEvent.offsetX, mouseEvent.offsetY);
     }
 
     private getPixelFromMouseEvent(e: MouseEvent): Pixel {
+        const pixelPosition = ImageColorPickerComponent.getCanvasRelativePosition(this.imageCanvas, e);
+        const p = this.imageCanvasContext.getImageData(pixelPosition.x, pixelPosition.y, 1, 1).data;
+        const hexColor = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+        const rgbColor = `rgb(${p[0]},${p[1]},${p[2]})`;
         return {
-            screenPosition: {x: e.x, y: e.y},
-            position: ImageColorPickerComponent.getCanvasRelativePosition(this.imageCanvas, e),
-            hex: "",
-            rgb: ""
+            screenPosition: new Point(e.pageX, e.pageY),
+            position: pixelPosition,
+            hex: hexColor,
+            rgb: rgbColor,
+            mouseEvent: e
         };
     }
 }

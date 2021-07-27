@@ -9,14 +9,14 @@ import {ColorPickerImageService} from "../../services/color-picker-image.service
 export class PixelInfoPopupComponent implements AfterViewInit {
     public get x(): number {
         let cursorPositionX = this.colorPickerImageService.hoveredPixel?.screenPosition.x ?? 0;
-        if (this.elementSize && cursorPositionX >= document.documentElement.scrollWidth - this.elementSize.width) {
+        if (this.elementSize && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientX >= window.innerWidth - this.elementSize.width) {
             cursorPositionX -= this.elementSize.width;
         }
         return cursorPositionX;
     }
     public get y(): number {
         let cursorPositionY = this.colorPickerImageService.hoveredPixel?.screenPosition.y ?? 0;
-        if (this.elementSize && cursorPositionY >= document.documentElement.scrollHeight - this.elementSize.height) {
+        if (this.elementSize && this.colorPickerImageService.hoveredPixel!.mouseEvent.clientY >= window.innerHeight - this.elementSize.height) {
             cursorPositionY -= this.elementSize.height;
         }
         return cursorPositionY;
@@ -33,8 +33,7 @@ export class PixelInfoPopupComponent implements AfterViewInit {
 
     public readonly elementSize = { width: 100, height: 140 };
 
-    constructor(private readonly colorPickerImageService: ColorPickerImageService,
-                private readonly elementRef: ElementRef<HTMLElement>) {
+    constructor(public readonly colorPickerImageService: ColorPickerImageService) {
     }
 
     @ViewChild("imageMagnifierCanvas")
@@ -53,6 +52,7 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         this.colorPickerImageService.hoveredPixelChanged$.subscribe(hoveredPixel => {
             if (!this.colorPickerImageService.currentImageElement) return;
 
+            canvasContext!.clearRect(0, 0, this.scaledImageSize, this.scaledImageSize);
             canvasContext!.drawImage(
                 this.colorPickerImageService.currentImageElement,
                 hoveredPixel!.position.x - Math.floor(this.scaledImageSize / 2),

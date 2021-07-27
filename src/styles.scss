@@ -32,3 +32,7 @@ html, body, main {
     image-rendering: pixelated;
     -ms-interpolation-mode: nearest-neighbor;
 }
+
+.font-mono {
+    font-family: "JetBrains Mono", "Consolas", monospace;
+}
