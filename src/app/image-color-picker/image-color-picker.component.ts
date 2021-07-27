@@ -56,8 +56,9 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     private previousMouseMovement?: MouseEvent;
 
+    private isDraggingJustCompleted = false;
+
     public canvasOnMouseMove(e: MouseEvent) {
-        this.colorPickerImageService.hoveredPixel = this.getPixelFromMouseEvent(e);
         if (this.isMouseDown && this.mouseDownPosition && this.previousMouseMovement) {
             const shiftFromStart = new Point(
                 e.clientX - this.mouseDownPosition.clientX,
@@ -76,11 +77,20 @@ export class ImageColorPickerComponent implements AfterViewInit {
                 this.imageCanvasWrapper.scrollTop += (shift.y * scrollingMultiplier);
             }
         }
+        if (!this.isDragging) {
+            this.colorPickerImageService.hoveredPixel = this.getPixelFromMouseEvent(e);
+        }
 
         this.previousMouseMovement = e;
     }
 
     public canvasOnMouseClick(e: MouseEvent) {
+        if (this.isDragging || this.isDraggingJustCompleted) {
+            if (this.isDraggingJustCompleted) {
+                this.isDraggingJustCompleted = false;
+            }
+            return;
+        }
         this.colorPickerImageService.selectedPixel = this.getPixelFromMouseEvent(e);
     }
 
@@ -140,8 +150,12 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     canvasOnMouseUp(e: MouseEvent) {
         if (this.isMouseDown) {
-            this.isMouseDown = false;
             this.mouseDownPosition = null;
+            this.colorPickerImageService.hoveredPixel = this.getPixelFromMouseEvent(e);
+            if (this.isDragging) {
+                this.isDraggingJustCompleted = true;
+            }
+            this.isMouseDown = false;
         }
     }
 }
