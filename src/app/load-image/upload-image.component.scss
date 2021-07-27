@@ -1,0 +1,10 @@
+.load-image-area {
+    border: 3px dashed #607d8b;
+    color: #78909c;
+    padding: 70px 80px;
+
+    &:hover {
+        cursor: pointer;
+        background: rgba(69, 90, 100, 0.1);
+    }
+}

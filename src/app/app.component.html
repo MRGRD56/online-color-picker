@@ -1,5 +1,25 @@
-<main class="d-flex flex-column flex-lg-row" (paste)="onPaste($event)">
-    <app-sidebar></app-sidebar>
+<div class="modal fade" id="upload-image-modal" tabindex="-1" aria-labelledby="upload-image-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark-element">
+<!--            <div class="modal-header" style="border-bottom: 1px solid #37474f;">-->
+<!--                <h5 class="modal-title" id="upload-image-modal-label">Upload image</h5>-->
+<!--                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+            <div class="modal-body">
+                <app-upload-image></app-upload-image>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<main class="flex-column flex-lg-row"
+      [style.display]="colorPickerImageService.isImageLoaded ? 'flex' : 'none'">
+    <app-sidebar></app-sidebar>
     <app-image-color-picker></app-image-color-picker>
+</main>
+
+<main class="justify-content-center align-items-center"
+      [style.display]="colorPickerImageService.isImageLoaded ? 'none' : 'flex'">
+    <app-upload-image></app-upload-image>
 </main>

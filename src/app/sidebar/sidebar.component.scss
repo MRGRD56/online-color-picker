@@ -3,7 +3,7 @@
 
     @media (min-width: 992px) {
         height: 100%;
-        width: 280px;
+        width: 300px;
     }
 }
 
@@ -11,4 +11,16 @@
     width: 40px;
     font-size: 30px;
     padding: 0 8px;
+}
+
+.upload-image-modal-button {
+    background: transparent;
+    border: none;
+    color: #26a69a;
+    cursor: pointer;
+    font-size: 1.15rem;
+
+    &:hover {
+        color: #009688;
+    }
 }

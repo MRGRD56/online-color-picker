@@ -24,6 +24,7 @@ html, body, main {
     @extend .border-secondary;
 }
 
+//noinspection CssInvalidPropertyValue
 .pixelated {
     image-rendering: optimizeSpeed;
     image-rendering: -moz-crisp-edges;
@@ -38,5 +39,5 @@ html, body, main {
 }
 
 app-image-color-picker {
-    width: calc(100% - 280px);
+    width: calc(100% - 300px);
 }

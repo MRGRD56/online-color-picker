@@ -1,5 +1,5 @@
 import {Component, Inject, Injectable} from "@angular/core";
-import {ColorPickerImageService} from "../services/color-picker-image.service";
+import {ColorPickerImageService} from "../services/color-picker-image/color-picker-image.service";
 
 @Component({
     selector: "app-root",
@@ -9,12 +9,15 @@ import {ColorPickerImageService} from "../services/color-picker-image.service";
 export class AppComponent {
     public title = "online-color-picker";
 
-    constructor(private readonly colorPickerImageService: ColorPickerImageService) {
+    constructor(public readonly colorPickerImageService: ColorPickerImageService) {
+        window.addEventListener("paste", e => this.windowOnPaste(<ClipboardEvent>e));
     }
 
-    onPaste(e: ClipboardEvent) {
+    private windowOnPaste(e: ClipboardEvent) {
         if (!e.clipboardData) return;
 
-        this.colorPickerImageService.loadFromDataTransfer(e.clipboardData);
+        this.colorPickerImageService.loadFromDataTransfer(e.clipboardData, () => {
+            console.log("now loading...");
+        });
     }
 }

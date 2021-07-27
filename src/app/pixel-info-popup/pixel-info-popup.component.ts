@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ComponentRef, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ColorPickerImageService} from "../../services/color-picker-image.service";
+import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
+import {AppSettingsService} from "../../services/app-settings/app-settings.service";
 
 @Component({
     selector: 'app-pixel-info-popup',
@@ -26,14 +27,13 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         return cursorPositionY;
     }
 
-    public readonly scaledImageSize: number = 11;
+    public get scaledImageSize() {
+        return this.appSettings.pixelInfoPopup.scaledImageSize;
+    }
 
-    public readonly elementSize = {
-        width: 150,
-        get height(): number {
-            return this.width + 30;
-        }
-    };
+    public get elementSize() {
+        return this.appSettings.pixelInfoPopup.elementSize;
+    }
 
     public get currentPixelBorder() {
         const onePixelWidth = (this.elementSize.width - 2) / this.scaledImageSize;
@@ -43,7 +43,8 @@ export class PixelInfoPopupComponent implements AfterViewInit {
         };
     }
 
-    constructor(public readonly colorPickerImageService: ColorPickerImageService) {
+    constructor(public readonly colorPickerImageService: ColorPickerImageService,
+                private readonly appSettings: AppSettingsService) {
     }
 
     @ViewChild("imageMagnifierCanvas")

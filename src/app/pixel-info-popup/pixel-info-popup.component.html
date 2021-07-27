@@ -12,17 +12,16 @@
                 [style.width]="elementSize.width - 2 + 'px'"
                 [style.height]="elementSize.width - 2 + 'px'"
                 class="pixelated position-absolute"></canvas>
-        <div class="position-relative" style="border: 1px solid #90a4ae;"
+        <div class="position-relative" style="border: 1px solid #d50000;"
              [style.width]="currentPixelBorder.width"
              [style.height]="currentPixelBorder.width"
              [style.left]="currentPixelBorder.left"
              [style.top]="currentPixelBorder.left">
-
         </div>
     </div>
     <div class="d-flex align-items-center" style="height: 30px; margin-left: 7px; margin-right: 7px;" *ngIf="colorPickerImageService?.hoveredPixel">
         <div [style.backgroundColor]="colorPickerImageService.hoveredPixel!.hex"
-             style="width: 15px; height: 15px; border: 1px solid #37474f;"></div>
+             style="width: 15px; height: 15px; border: 1px solid #37474f;" class="shadow rounded"></div>
         <div class="text-light font-mono" style="font-size: 14px; margin-left: 5px;">
             {{ colorPickerImageService.hoveredPixel!.hex }}
         </div>

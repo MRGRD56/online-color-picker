@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {ColorPickerImageService} from "../../services/color-picker-image.service";
+import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
 import Point from "../../models/Point";
 import Pixel from "../../models/Pixel";
 import {rgbToHex} from "../../main";
+import {AppSettingsService} from "../../services/app-settings/app-settings.service";
 
 @Component({
     selector: 'app-image-color-picker',
@@ -26,13 +27,22 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     public isDragging = false;
 
-    private isReversedScrolling: boolean = true;
+    private get isReversedDragScrolling() {
+        return this.appSettings.colorPicker.isReversedDragScrolling;
+    }
+    private get dragScrollingSpeed() {
+        return this.appSettings.colorPicker.dragScrollingSpeed;
+    }
 
-    constructor(private readonly colorPickerImageService: ColorPickerImageService) {
-
+    constructor(private readonly colorPickerImageService: ColorPickerImageService,
+                private readonly appSettings: AppSettingsService) {
+        console.log("image-color-picker: ctor");
+        window.addEventListener("mousemove", this.windowOnMouseMove);
+        window.addEventListener("mouseup", this.windowOnMouseUp);
     }
 
     ngAfterViewInit(): void {
+        console.log("image-color-picker: ngAfterViewInit");
         const canvasContext = this.imageCanvas.getContext("2d");
         if (canvasContext) {
             this.imageCanvasContext = canvasContext;
@@ -72,7 +82,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
                 this.isDragging = true;
             }
             if (this.isDragging) {
-                const scrollingMultiplier = this.isReversedScrolling ? 1 : -1;
+                const scrollingMultiplier = (this.isReversedDragScrolling ? 1 : -1) * this.dragScrollingSpeed;
                 this.imageCanvasWrapper.scrollLeft += (shift.x * scrollingMultiplier);
                 this.imageCanvasWrapper.scrollTop += (shift.y * scrollingMultiplier);
             }
@@ -129,10 +139,10 @@ export class ImageColorPickerComponent implements AfterViewInit {
     }
 
     private _isMouseDown = false;
-    get isMouseDown(): boolean {
+    private get isMouseDown(): boolean {
         return this._isMouseDown;
     }
-    set isMouseDown(value: boolean) {
+    private set isMouseDown(value: boolean) {
         this._isMouseDown = value;
         if (!this._isMouseDown) {
             this.isDragging = false;
@@ -141,14 +151,14 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     private mouseDownPosition?: MouseEvent | null;
 
-    canvasOnMouseDown(e: MouseEvent) {
+    public canvasOnMouseDown(e: MouseEvent) {
         if (!this.isMouseDown) {
             this.isMouseDown = true;
             this.mouseDownPosition = e;
         }
     }
 
-    canvasOnMouseUp(e: MouseEvent) {
+    public canvasOnMouseUp(e: MouseEvent) {
         if (this.isMouseDown) {
             this.mouseDownPosition = null;
             this.colorPickerImageService.hoveredPixel = this.getPixelFromMouseEvent(e);
@@ -157,5 +167,13 @@ export class ImageColorPickerComponent implements AfterViewInit {
             }
             this.isMouseDown = false;
         }
+    }
+
+    private windowOnMouseMove(e: MouseEvent) {
+
+    }
+
+    private windowOnMouseUp(e: MouseEvent) {
+
     }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import Pixel from "../models/Pixel";
+import Pixel from "../../models/Pixel";
 import {Observable, Observer, Subscriber} from "rxjs";
 
 @Injectable({
@@ -14,6 +14,7 @@ export class ColorPickerImageService {
     public set currentImage(value) {
         this._currentImage = value;
         this.currentImageChangedSubscriber?.next(value);
+        console.log("currentImage", value);
     }
 
     private _currentImageElement?: HTMLImageElement;
@@ -24,7 +25,15 @@ export class ColorPickerImageService {
         this._currentImageElement = value;
     }
 
-    public isImageLoaded() {
+    private _isImageLoading = false;
+    get isImageLoading(): boolean {
+        return this._isImageLoading;
+    }
+    private set isImageLoading(value: boolean) {
+        this._isImageLoading = value;
+    }
+
+    public get isImageLoaded() {
         return this.currentImage != null;
     }
 
@@ -43,13 +52,19 @@ export class ColorPickerImageService {
     });
     private selectedPixelChangedSubscriber?: Subscriber<Pixel | null | undefined>;
 
-    public loadFromDataTransfer(dataTransfer: DataTransfer) {
+    public loadFromDataTransfer(dataTransfer: DataTransfer, beforeLoading: (() => void) | undefined = undefined) {
         if (!(dataTransfer?.files?.length)) {
             return;
         }
+        this.isImageLoading = true;
+        beforeLoading?.();
 
         const imageFile = dataTransfer.files[0];
-        this.currentImage = URL.createObjectURL(imageFile);
+        this.loadFromFile(imageFile);
+    }
+
+    public loadFromFile(file: File) {
+        this.currentImage = URL.createObjectURL(file);
     }
 
     private _hoveredPixel: Pixel | null | undefined;
