@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {ColorFormat} from "../../models/ColorFormat";
 import {ColorMode} from "../../models/ColorMode";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class AppSettingsService {
     public pixelInfoPopup = {
@@ -29,5 +29,25 @@ export class AppSettingsService {
         dragScrollingSpeed: 1,
         autoCopyColor: null,
         colorMode: ColorMode.Rgb
+    }
+
+    public load() {
+        const settingsJson = localStorage.getItem("app-settings");
+        if (settingsJson == null) {
+            return;
+        }
+        const settings = JSON.parse(settingsJson);
+        if (settings == null) {
+            return;
+        }
+        for (let key in this) {
+            if (this.hasOwnProperty(key)) {
+                this[key] = settings[key];
+            }
+        }
+    }
+
+    public save() {
+        localStorage.setItem("app-settings", JSON.stringify(this));
     }
 }

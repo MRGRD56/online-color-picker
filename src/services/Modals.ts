@@ -1,7 +1,11 @@
 import ModalRef from "../models/ModalRef";
 
-export default {
+const modals = {
     uploadImageModal: new ModalRef("#upload-image-modal", {
+        backdrop: true
+    }),
+    appSettingsModal: new ModalRef("#settings-modal", {
         backdrop: true
     })
 };
+export default modals;

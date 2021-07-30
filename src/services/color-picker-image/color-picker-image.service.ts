@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import Pixel from "../../models/Pixel";
 import {Observable, Observer, Subscriber} from "rxjs";
-import Modals from "../Modals";
+import modals from "../Modals";
 import {AppSettingsService} from "../app-settings/app-settings.service";
 import {ColorFormat} from "../../models/ColorFormat";
 
@@ -21,7 +21,7 @@ export class ColorPickerImageService {
         this._currentImage = value;
         this.currentImageChangedSubscriber?.next(this._currentImage);
         if (this._currentImage) {
-            Modals.uploadImageModal.modal!.hide();
+            modals.uploadImageModal.modal!.hide();
             document.querySelectorAll("div.modal-backdrop").forEach(element => {
                 element.removeAttribute("show");
                 element.remove();
