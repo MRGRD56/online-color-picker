@@ -8,8 +8,8 @@ import {ColorMode} from "../../models/ColorMode";
 export class AppSettingsService {
     public pixelInfoPopup = {
         scaledImageSize: 11,
-        elementWidth: 150,
-        get elementSize(): { width: number, height: number } {
+        elementWidth: 300,
+        get elementSize() {
             return {
                 width: this.elementWidth,
                 get height(): number {
@@ -36,15 +36,14 @@ export class AppSettingsService {
         if (settingsJson == null) {
             return;
         }
-        const settings = JSON.parse(settingsJson);
+        const settings = <AppSettingsService>JSON.parse(settingsJson);
         if (settings == null) {
             return;
         }
-        for (let key in this) {
-            if (this.hasOwnProperty(key)) {
-                this[key] = settings[key];
-            }
-        }
+
+        this.pixelInfoPopup.scaledImageSize = settings.pixelInfoPopup.scaledImageSize;
+        this.pixelInfoPopup.elementWidth = settings.pixelInfoPopup.elementWidth;
+        this.colorPicker = settings.colorPicker;
     }
 
     public save() {

@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ComponentRef, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ComponentRef, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
 import {AppSettingsService} from "../../services/app-settings/app-settings.service";
 
 @Component({
-    selector: 'app-pixel-info-popup',
-    templateUrl: './pixel-info-popup.component.html',
-    styleUrls: ['./pixel-info-popup.component.scss']
+    selector: "app-pixel-info-popup",
+    templateUrl: "./pixel-info-popup.component.html",
+    styleUrls: ["./pixel-info-popup.component.scss"]
 })
 export class PixelInfoPopupComponent implements AfterViewInit {
     public get x(): number {
@@ -38,8 +38,8 @@ export class PixelInfoPopupComponent implements AfterViewInit {
     public get currentPixelBorder() {
         const onePixelWidth = (this.elementSize.width - 2) / this.scaledImageSize;
         return {
-            width: onePixelWidth + 'px',
-            left: onePixelWidth * Math.floor(this.scaledImageSize / 2) + 'px'
+            width: onePixelWidth + "px",
+            left: onePixelWidth * Math.floor(this.scaledImageSize / 2) + "px"
         };
     }
 
