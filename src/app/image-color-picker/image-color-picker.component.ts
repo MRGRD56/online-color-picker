@@ -2,8 +2,9 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
 import Point from "../../models/Point";
 import Pixel from "../../models/Pixel";
-import {rgbToHex} from "../../main";
+import {getColorHex, getColorRgb} from "../../extensions/colors";
 import {AppSettingsService} from "../../services/app-settings/app-settings.service";
+import {ColorMode} from "../../models/ColorMode";
 
 @Component({
     selector: 'app-image-color-picker',
@@ -127,8 +128,12 @@ export class ImageColorPickerComponent implements AfterViewInit {
     private getPixelFromMouseEvent(e: MouseEvent): Pixel {
         const pixelPosition = ImageColorPickerComponent.getCanvasRelativePosition(this.imageCanvas, e);
         const p = this.imageCanvasContext.getImageData(pixelPosition.x, pixelPosition.y, 1, 1).data;
-        const hexColor = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-        const rgbColor = `rgb(${p[0]},${p[1]},${p[2]})`;
+        const colorMode = this.appSettings.colorPicker.colorMode;
+        const isRgbaMode = colorMode === ColorMode.Rgba ? ColorMode.Rgba : colorMode === ColorMode.Auto && p[3] < 255;
+        const alpha = isRgbaMode ? p[3] : undefined;
+        const rgba: [number, number, number, number | undefined] = [p[0], p[1], p[2], alpha];
+        const hexColor = getColorHex(...rgba);
+        const rgbColor = getColorRgb(...rgba);
         return {
             screenPosition: new Point(e.pageX, e.pageY),
             position: pixelPosition,

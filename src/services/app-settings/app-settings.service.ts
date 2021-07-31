@@ -9,7 +9,7 @@ export class AppSettingsService {
     public magnifier = {
         scaledImageSize: 11,
         elementWidth: 150,
-        isGridEnabled: true,
+        isGridEnabled: false,
         get elementSize() {
             return {
                 width: this.elementWidth,
@@ -48,7 +48,11 @@ export class AppSettingsService {
             this.magnifier.scaledImageSize = settings.magnifier.scaledImageSize;
             this.magnifier.elementWidth = settings.magnifier.elementWidth;
             this.magnifier.isGridEnabled = settings.magnifier.isGridEnabled;
-            this.colorPicker = settings.colorPicker;
+            this.colorPicker.colorPixelsCount = settings.colorPicker.colorPixelsCount;
+            this.colorPicker.dragScrollingSpeed = settings.colorPicker.dragScrollingSpeed;
+            this.colorPicker.autoCopyColor = settings.colorPicker.autoCopyColor;
+            this.colorPicker.colorMode = settings.colorPicker.colorMode;
+            this.colorPicker.isInvertedDragScrolling = settings.colorPicker.isInvertedDragScrolling;
         } catch (error) {
             this.save();
             console.warn("Failed to load settings from the localStorage, the saved settings overwritten.");

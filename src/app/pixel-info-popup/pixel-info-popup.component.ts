@@ -37,9 +37,11 @@ export class PixelInfoPopupComponent implements AfterViewInit {
 
     public get currentPixelBorder() {
         const onePixelWidth = (this.elementSize.width - 2) / this.scaledImageSize;
+        const colorPixelsWidth = onePixelWidth * this.appSettings.colorPicker.colorPixelsCount;
         return {
-            width: onePixelWidth,
-            left: onePixelWidth * Math.floor(this.scaledImageSize / 2)
+            width: colorPixelsWidth,
+            left: onePixelWidth * Math.floor(this.scaledImageSize / 2) -
+                onePixelWidth * Math.floor((this.appSettings.colorPicker.colorPixelsCount - 1) / 2)
         };
     }
 

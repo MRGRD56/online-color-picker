@@ -43,6 +43,17 @@
                         </div>
                     </div>
                     <div>
+                        <div class="setting-label">Color mode</div>
+                        <div class="setting-value">
+                            <select class="dark-element form-select"
+                                    [(ngModel)]="appSettings.colorPicker.colorMode">
+                                <option [ngValue]="0">Auto</option>
+                                <option [ngValue]="1">RGB</option>
+                                <option [ngValue]="2">RGBA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
                         <div class="setting-label">Magnifier grid</div>
                         <div class="setting-value form-check">
                             <input id="is-grid-enabled-checkbox" type="checkbox" class="text-light form-check-input ms-0"
@@ -67,6 +78,13 @@
                         <div class="setting-value">
                             <input type="number" min="0.25" max="30" step="0.25" class="dark-element form-control"
                                    [(ngModel)]="appSettings.colorPicker.dragScrollingSpeed">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Color pixels count</div>
+                        <div class="setting-value">
+                            <input type="number" min="1" [max]="appSettings.magnifier.scaledImageSize" step="1" class="dark-element form-control"
+                                   [(ngModel)]="appSettings.colorPicker.colorPixelsCount">
                         </div>
                     </div>
                 </div>
