@@ -20,7 +20,6 @@
         "@angular/platform-browser-dynamic": "~12.1.2",
         "@angular/router": "~12.1.2",
         "bootstrap": "^5.0.2",
-        "easycanvas": "^0.8.5",
         "rxjs": "~6.6.0",
         "tslib": "^2.2.0",
         "zone.js": "~0.11.4"
@@ -34,9 +33,9 @@
         "@angular-eslint/template-parser": "12.3.1",
         "@angular/cli": "~12.1.2",
         "@angular/compiler-cli": "~12.1.2",
+        "@types/bootstrap": "^5.0.17",
         "@types/jasmine": "~3.8.0",
         "@types/node": "^12.11.1",
-        "@types/bootstrap": "^5.0.17",
         "@typescript-eslint/eslint-plugin": "4.28.2",
         "@typescript-eslint/parser": "4.28.2",
         "eslint": "^7.26.0",
