@@ -24,12 +24,14 @@ export class AppSettingsService {
         isInvertedDragScrolling: boolean,
         dragScrollingSpeed: number,
         autoCopyColor: ColorFormat | null,
-        colorMode: ColorMode
+        colorMode: ColorMode,
+        colorPixelsCount: number
     } = {
         isInvertedDragScrolling: false,
         dragScrollingSpeed: 1,
         autoCopyColor: null,
-        colorMode: ColorMode.Rgb
+        colorMode: ColorMode.Rgb,
+        colorPixelsCount: 3
     }
 
     public load() {
@@ -45,6 +47,7 @@ export class AppSettingsService {
 
             this.magnifier.scaledImageSize = settings.magnifier.scaledImageSize;
             this.magnifier.elementWidth = settings.magnifier.elementWidth;
+            this.magnifier.isGridEnabled = settings.magnifier.isGridEnabled;
             this.colorPicker = settings.colorPicker;
         } catch (error) {
             this.save();
