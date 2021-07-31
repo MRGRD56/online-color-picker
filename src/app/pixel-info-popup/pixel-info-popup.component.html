@@ -17,14 +17,30 @@
         <div class="magnifier-grid-wrapper position-relative"
              [style.width]="elementSize.width - 1 + 'px'"
              [style.height]="elementSize.width - 1 + 'px'">
-            <div class="d-grid"
-                 *ngIf="true"
+            <div class="d-grid position-absolute"
+                 *ngIf="appSettings.magnifier.isGridEnabled"
                  [style.width]="elementSize.width - 1 + 'px'"
                  [style.height]="elementSize.width - 1 + 'px'"
                  [style.grid-template]="'repeat(' + scaledImageSize + ', 1fr) / repeat(' + scaledImageSize + ', 1fr)'">
                 <div style="border: 1px solid #212121; margin: -1px 0 0 -1px;"
                      *appNgRepeat="scaledImageSize * scaledImageSize"></div>
             </div>
+            <div class="position-absolute"
+                 style="
+                 border-bottom: 1px solid #263238;
+                 margin: -1px;"
+                 *ngIf="appSettings.magnifier.isGridEnabled"
+                 [style.width]="elementSize.width + 'px'"
+                 [style.height]="elementSize.width + 'px'"></div>
+            <div class="position-absolute"
+                 style="
+                 border-top: 1px solid #37474f;
+                 border-right: 1px solid #37474f;
+                 border-left: 1px solid #37474f;
+                 margin: -1px;"
+                 *ngIf="appSettings.magnifier.isGridEnabled"
+                 [style.width]="elementSize.width + 'px'"
+                 [style.height]="elementSize.width + 'px'"></div>
         </div>
         <div class="position-absolute" style="border: 1px solid #d50000;"
              [style.width]="currentPixelBorder.width + 'px'"
@@ -33,7 +49,8 @@
              [style.top]="currentPixelBorder.left + 'px'">
         </div>
     </div>
-    <div class="d-flex align-items-center" style="height: 30px; margin-left: 7px; margin-right: 7px;" *ngIf="colorPickerImageService?.hoveredPixel">
+    <div class="d-flex align-items-center" style="height: 30px; margin-left: 7px; margin-right: 7px;"
+         *ngIf="colorPickerImageService?.hoveredPixel">
         <div [style.backgroundColor]="colorPickerImageService.hoveredPixel!.hex"
              style="width: 15px; height: 15px; border: 1px solid #37474f;" class="shadow rounded"></div>
         <div class="text-light font-mono" style="font-size: 14px; margin-left: 5px;">

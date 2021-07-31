@@ -9,6 +9,7 @@ export class AppSettingsService {
     public magnifier = {
         scaledImageSize: 11,
         elementWidth: 150,
+        isGridEnabled: true,
         get elementSize() {
             return {
                 width: this.elementWidth,

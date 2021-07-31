@@ -44,7 +44,7 @@ export class PixelInfoPopupComponent implements AfterViewInit {
     }
 
     constructor(public readonly colorPickerImageService: ColorPickerImageService,
-                private readonly appSettings: AppSettingsService) {
+                public readonly appSettings: AppSettingsService) {
     }
 
     @ViewChild("imageMagnifierCanvas")
