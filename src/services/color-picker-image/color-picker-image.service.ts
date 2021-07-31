@@ -1,12 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import Pixel from "../../models/Pixel";
 import {Observable, Observer, Subscriber} from "rxjs";
 import modals from "../Modals";
 import {AppSettingsService} from "../app-settings/app-settings.service";
 import {ColorFormat} from "../../models/ColorFormat";
+import Size from "../../models/Size";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class ColorPickerImageService {
     constructor(private readonly appSettings: AppSettingsService) {
@@ -28,6 +29,8 @@ export class ColorPickerImageService {
             });
         }
     }
+
+    public currentImageSize?: Size;
 
     private _currentImageElement?: HTMLImageElement;
     get currentImageElement(): HTMLImageElement | undefined {
@@ -100,18 +103,18 @@ export class ColorPickerImageService {
         if (this._selectedPixel && this.appSettings.colorPicker.autoCopyColor !== null) {
             const getTextToCopy = () => {
                 switch (this.appSettings.colorPicker.autoCopyColor) {
-                    case ColorFormat.Hex:
-                        return this._selectedPixel?.hex;
-                    case ColorFormat.Rgb:
-                        return this._selectedPixel?.rgb;
-                    default:
-                        return null;
+                case ColorFormat.Hex:
+                    return this._selectedPixel?.hex;
+                case ColorFormat.Rgb:
+                    return this._selectedPixel?.rgb;
+                default:
+                    return null;
                 }
             };
             const textToCopy = getTextToCopy();
             if (textToCopy == null) return;
 
-            navigator.clipboard.writeText(textToCopy);
+            navigator.clipboard.writeText(textToCopy).catch(console.error);
         }
     }
 }

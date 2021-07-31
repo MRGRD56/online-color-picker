@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {fromEvent, Observable, Subscriber} from "rxjs";
+import {Injectable} from "@angular/core";
+import {fromEvent} from "rxjs";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root"
 })
 export class FileOpenService {
     public openFile(multiple: boolean = false): Promise<FileList> {
@@ -19,7 +19,7 @@ export class FileOpenService {
                 .subscribe(_ => {
                     resolve(inputElement.files!);
                     inputElement.remove();
-            }, error => reject(error));
+                }, error => reject(error));
             inputElement.click();
         });
     }

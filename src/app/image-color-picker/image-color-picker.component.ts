@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from "@angular/core";
 import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
 import Point from "../../models/Point";
 import Pixel from "../../models/Pixel";
@@ -7,19 +7,21 @@ import {AppSettingsService} from "../../services/app-settings/app-settings.servi
 import {ColorMode} from "../../models/ColorMode";
 
 @Component({
-    selector: 'app-image-color-picker',
-    templateUrl: './image-color-picker.component.html',
-    styleUrls: ['./image-color-picker.component.scss']
+    selector: "app-image-color-picker",
+    templateUrl: "./image-color-picker.component.html",
+    styleUrls: ["./image-color-picker.component.scss"]
 })
 export class ImageColorPickerComponent implements AfterViewInit {
     @ViewChild("imageCanvas")
     private imageCanvasRef!: ElementRef<HTMLCanvasElement>;
+
     private get imageCanvas(): HTMLCanvasElement {
         return this.imageCanvasRef.nativeElement;
     }
 
     @ViewChild("imageCanvasWrapper")
     private imageCanvasWrapperRef!: ElementRef<HTMLDivElement>;
+
     private get imageCanvasWrapper(): HTMLDivElement {
         return this.imageCanvasWrapperRef.nativeElement;
     }
@@ -31,6 +33,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
     private get isInvertedDragScrolling() {
         return this.appSettings.colorPicker.isInvertedDragScrolling;
     }
+
     private get dragScrollingSpeed() {
         return this.appSettings.colorPicker.dragScrollingSpeed;
     }
@@ -53,12 +56,17 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
         this.colorPickerImageService.currentImageChanged$.subscribe(imageUrl => {
             this.colorPickerImageService.currentImageElement = new Image();
-            this.colorPickerImageService.currentImageElement.onload = () => {
+            this.colorPickerImageService.currentImageElement.addEventListener("load", () => {
                 this.imageCanvas.width = this.colorPickerImageService.currentImageElement!.width;
                 this.imageCanvas.height = this.colorPickerImageService.currentImageElement!.height;
+                //FIXME: make colorPickerImageService.currentImageSize private
+                this.colorPickerImageService.currentImageSize = {
+                    width: this.imageCanvas.width,
+                    height: this.imageCanvas.height
+                };
                 this.imageCanvasContext.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
                 this.imageCanvasContext.drawImage(this.colorPickerImageService.currentImageElement!, 0, 0);
-            };
+            });
             this.colorPickerImageService.currentImageElement.src = imageUrl;
         });
     }
@@ -127,11 +135,44 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     private getPixelFromMouseEvent(e: MouseEvent): Pixel {
         const pixelPosition = ImageColorPickerComponent.getCanvasRelativePosition(this.imageCanvas, e);
-        const p = this.imageCanvasContext.getImageData(pixelPosition.x, pixelPosition.y, 1, 1).data;
+        const colorPixelsCount = this.appSettings.colorPicker.colorPixelsCount;
+        const leftShift = Math.floor((colorPixelsCount - 1) / 2);
+        const getImageDataSourceCoordinate = (pixelPositionCoordinate: number) => {
+            const coordinate = pixelPositionCoordinate - leftShift;
+            return coordinate < 0 ? 0 : coordinate;
+        };
+        const getImageDataSize = (imageSize: number, pixelPositionCoordinate: number) => {
+            const c = (imageSize - 1) - (pixelPositionCoordinate + colorPixelsCount - 1);
+            return c > 0 ? colorPixelsCount : colorPixelsCount + c;
+        };
+        const imageData = this.imageCanvasContext.getImageData(
+            getImageDataSourceCoordinate(pixelPosition.x),
+            getImageDataSourceCoordinate(pixelPosition.y),
+            getImageDataSize(this.colorPickerImageService.currentImageSize!.width, pixelPosition.x),
+            getImageDataSize(this.colorPickerImageService.currentImageSize!.height, pixelPosition.y));
+        const pixelData = imageData.data;
+
+        const pixelsCount = imageData.width * imageData.height;
+        const colorComponents = {r: 0, g: 0, b: 0, a: 0};
+        for (let pixelIndex = 0; pixelIndex < pixelData.length; pixelIndex += 4) {
+            colorComponents.r += pixelData[pixelIndex];
+            colorComponents.g += pixelData[pixelIndex + 1];
+            colorComponents.b += pixelData[pixelIndex + 2];
+            colorComponents.a += pixelData[pixelIndex + 3];
+        }
+        const color = [
+            Math.floor(colorComponents.r / pixelsCount),
+            Math.floor(colorComponents.g / pixelsCount),
+            Math.floor(colorComponents.b / pixelsCount),
+            Math.floor(colorComponents.a / pixelsCount)
+        ];
+
         const colorMode = this.appSettings.colorPicker.colorMode;
-        const isRgbaMode = colorMode === ColorMode.Rgba ? ColorMode.Rgba : colorMode === ColorMode.Auto && p[3] < 255;
-        const alpha = isRgbaMode ? p[3] : undefined;
-        const rgba: [number, number, number, number | undefined] = [p[0], p[1], p[2], alpha];
+        const isRgbaMode = colorMode === ColorMode.Rgba
+            ? ColorMode.Rgba
+            : colorMode === ColorMode.Auto && color[3] < 255;
+        const alpha = isRgbaMode ? color[3] : undefined;
+        const rgba: [number, number, number, number | undefined] = [color[0], color[1], color[2], alpha];
         const hexColor = getColorHex(...rgba);
         const rgbColor = getColorRgb(...rgba);
         return {
@@ -147,6 +188,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
     private get isMouseDown(): boolean {
         return this._isMouseDown;
     }
+
     private set isMouseDown(value: boolean) {
         this._isMouseDown = value;
         if (!this._isMouseDown) {
