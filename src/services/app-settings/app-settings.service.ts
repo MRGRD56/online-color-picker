@@ -30,8 +30,8 @@ export class AppSettingsService {
         isInvertedDragScrolling: false,
         dragScrollingSpeed: 1,
         autoCopyColor: null,
-        colorMode: ColorMode.Rgb,
-        colorPixelsCount: 3
+        colorMode: ColorMode.Auto,
+        colorPixelsCount: 1
     }
 
     public load() {
