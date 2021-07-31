@@ -6,9 +6,9 @@ import {ColorMode} from "../../models/ColorMode";
     providedIn: "root"
 })
 export class AppSettingsService {
-    public pixelInfoPopup = {
+    public magnifier = {
         scaledImageSize: 11,
-        elementWidth: 300,
+        elementWidth: 150,
         get elementSize() {
             return {
                 width: this.elementWidth,
@@ -32,18 +32,23 @@ export class AppSettingsService {
     }
 
     public load() {
-        const settingsJson = localStorage.getItem("app-settings");
-        if (settingsJson == null) {
-            return;
-        }
-        const settings = <AppSettingsService>JSON.parse(settingsJson);
-        if (settings == null) {
-            return;
-        }
+        try {
+            const settingsJson = localStorage.getItem("app-settings");
+            if (settingsJson == null) {
+                return;
+            }
+            const settings = <AppSettingsService>JSON.parse(settingsJson);
+            if (settings == null) {
+                return;
+            }
 
-        this.pixelInfoPopup.scaledImageSize = settings.pixelInfoPopup.scaledImageSize;
-        this.pixelInfoPopup.elementWidth = settings.pixelInfoPopup.elementWidth;
-        this.colorPicker = settings.colorPicker;
+            this.magnifier.scaledImageSize = settings.magnifier.scaledImageSize;
+            this.magnifier.elementWidth = settings.magnifier.elementWidth;
+            this.colorPicker = settings.colorPicker;
+        } catch (error) {
+            this.save();
+            console.warn("Failed to load settings from the localStorage, the saved settings overwritten.");
+        }
     }
 
     public save() {

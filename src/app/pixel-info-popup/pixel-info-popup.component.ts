@@ -28,18 +28,18 @@ export class PixelInfoPopupComponent implements AfterViewInit {
     }
 
     public get scaledImageSize() {
-        return this.appSettings.pixelInfoPopup.scaledImageSize;
+        return this.appSettings.magnifier.scaledImageSize;
     }
 
     public get elementSize() {
-        return this.appSettings.pixelInfoPopup.elementSize;
+        return this.appSettings.magnifier.elementSize;
     }
 
     public get currentPixelBorder() {
         const onePixelWidth = (this.elementSize.width - 2) / this.scaledImageSize;
         return {
-            width: onePixelWidth + "px",
-            left: onePixelWidth * Math.floor(this.scaledImageSize / 2) + "px"
+            width: onePixelWidth,
+            left: onePixelWidth * Math.floor(this.scaledImageSize / 2)
         };
     }
 
