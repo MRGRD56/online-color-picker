@@ -21,12 +21,12 @@ export class AppSettingsService {
     };
 
     public colorPicker: {
-        isReversedDragScrolling: boolean,
+        isInvertedDragScrolling: boolean,
         dragScrollingSpeed: number,
         autoCopyColor: ColorFormat | null,
         colorMode: ColorMode
     } = {
-        isReversedDragScrolling: false,
+        isInvertedDragScrolling: false,
         dragScrollingSpeed: 1,
         autoCopyColor: null,
         colorMode: ColorMode.Rgb

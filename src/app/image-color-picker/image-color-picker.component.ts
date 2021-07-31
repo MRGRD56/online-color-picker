@@ -27,8 +27,8 @@ export class ImageColorPickerComponent implements AfterViewInit {
 
     public isDragging = false;
 
-    private get isReversedDragScrolling() {
-        return this.appSettings.colorPicker.isReversedDragScrolling;
+    private get isInvertedDragScrolling() {
+        return this.appSettings.colorPicker.isInvertedDragScrolling;
     }
     private get dragScrollingSpeed() {
         return this.appSettings.colorPicker.dragScrollingSpeed;
@@ -82,7 +82,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
                 this.isDragging = true;
             }
             if (this.isDragging) {
-                const scrollingMultiplier = (this.isReversedDragScrolling ? 1 : -1) * this.dragScrollingSpeed;
+                const scrollingMultiplier = (this.isInvertedDragScrolling ? 1 : -1) * this.dragScrollingSpeed;
                 this.imageCanvasWrapper.scrollLeft += (shift.x * scrollingMultiplier);
                 this.imageCanvasWrapper.scrollTop += (shift.y * scrollingMultiplier);
             }

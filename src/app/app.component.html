@@ -32,14 +32,41 @@
                         </div>
                     </div>
                     <div>
-                        <div class="setting-label">Auto color copy</div>
+                        <div class="setting-label">Copy color automatically</div>
                         <div class="setting-value">
-                            <select class="dark-element form-control"
+                            <select class="dark-element form-select"
                                     [(ngModel)]="appSettings.colorPicker.autoCopyColor">
                                 <option [ngValue]="null">None</option>
                                 <option [ngValue]="0">HEX</option>
                                 <option [ngValue]="1">RGB</option>
                             </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Magnifier grid</div>
+                        <div class="setting-value">
+                            <input id="is-grid-enabled-checkbox" type="checkbox" class="dark-element form-check"
+                                   [(ngModel)]="appSettings.magnifier.isGridEnabled">
+                            <label for="is-grid-enabled-checkbox" class="form-check-label px-2">
+                                Enable
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Invert image scrolling by dragging</div>
+                        <div class="setting-value">
+                            <input id="invert-scrolling-checkbox" type="checkbox" class="dark-element form-check"
+                                   [(ngModel)]="appSettings.colorPicker.isInvertedDragScrolling">
+                            <label for="invert-scrolling-checkbox" class="form-check-label px-2">
+                                Enable
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="setting-label">Image scrolling speed</div>
+                        <div class="setting-value">
+                            <input type="number" min="0.25" max="30" step="0.25" class="dark-element form-control"
+                                   [(ngModel)]="appSettings.colorPicker.dragScrollingSpeed">
                         </div>
                     </div>
                 </div>
