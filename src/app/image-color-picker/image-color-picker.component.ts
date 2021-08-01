@@ -142,7 +142,8 @@ export class ImageColorPickerComponent implements AfterViewInit {
             return coordinate < 0 ? 0 : coordinate;
         };
         const getImageDataSize = (imageSize: number, pixelPositionCoordinate: number) => {
-            const c = (imageSize - 1) - (pixelPositionCoordinate + colorPixelsCount - 1);
+            const c = (imageSize - 1) - (pixelPositionCoordinate + Math.ceil((colorPixelsCount - 1) / 2));
+            console.log("c", c);
             return c > 0 ? colorPixelsCount : colorPixelsCount + c;
         };
         const imageData = this.imageCanvasContext.getImageData(
