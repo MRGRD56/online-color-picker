@@ -10,12 +10,17 @@
                  [width]="60" [height]="60"
                  [color]="selectedPixelColor.hex">
             </app-color-view>
-            <app-color-text elementClass="mt-3" label="HEX:" [color]="selectedPixelColor.hex"></app-color-text>
-            <app-color-text elementClass="mt-3" label="RGB:" [color]="selectedPixelColor.rgb"></app-color-text>
+            <div class="app-color-text-wrapper d-flex flex-wrap">
+                <app-color-text style="max-width: 100%;" elementClass="mt-3"
+                                label="HEX:" [color]="selectedPixelColor.hex"></app-color-text>
+                <app-color-text style="max-width: 100%;" elementClass="mt-3"
+                                label="RGB:" [color]="selectedPixelColor.rgb"></app-color-text>
+            </div>
         </div>
-        <div class="selected-pixels-history-wrapper d-grid justify-content-start mt-3"
+        <div class="selected-pixels-history-wrapper overflow-auto d-grid d-sm-flex d-lg-grid flex-wrap justify-content-start mt-3"
+             style="max-width: 100%;"
              *ngIf="colorPickerImageService.selectedPixelsHistory.length > 0">
-            <app-color-view *ngFor="let pixel of colorPickerImageService.selectedPixelsHistory.slice(0, 14)"
+            <app-color-view *ngFor="let pixel of colorPickerImageService.selectedPixelsHistory.slice(0, 21)"
                             class="m-1"
                             style="cursor: pointer;"
                             [color]="pixel.color.getHex(colorMode)"

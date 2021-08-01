@@ -18,10 +18,25 @@
 }
 
 .selected-pixels-history-wrapper {
-    grid-template: repeat(2, auto) / repeat(7, auto);
+    grid-template: repeat(3, auto) / repeat(7, auto);
     margin-left: -0.25rem;
 }
 
 .selected-pixel-info-wrapper {
     max-width: 100%;
+}
+
+.app-color-text-wrapper {
+    flex-direction: column;
+
+    @media screen and (min-width: 610px) {
+        flex-direction: row;
+        & app-color-text:first-of-type {
+            margin-inline-end: 10px;
+        }
+    }
+
+    @media screen and (min-width: 992px) {
+        flex-direction: column;
+    }
 }
