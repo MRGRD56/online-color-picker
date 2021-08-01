@@ -19,11 +19,11 @@ export default class Color {
     }
 
     public getHex(colorMode: ColorMode): string {
-        return getColorHex(this.r, this.r, this.b, this.getAlpha(colorMode));
+        return getColorHex(this.r, this.g, this.b, this.getAlpha(colorMode));
     }
 
     public getRgb(colorMode: ColorMode): string {
-        return getColorRgb(this.r, this.r, this.b, this.getAlpha(colorMode));
+        return getColorRgb(this.r, this.g, this.b, this.getAlpha(colorMode));
     }
 
     public equals(color: Color) {
