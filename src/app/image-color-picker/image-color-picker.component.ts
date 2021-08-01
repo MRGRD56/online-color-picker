@@ -124,13 +124,6 @@ export class ImageColorPickerComponent implements AfterViewInit {
     }
 
     private static getCanvasRelativePosition(canvasElement: HTMLCanvasElement, mouseEvent: MouseEvent): Point {
-        // const canvasElementBoundingClientRect = canvasElement.getBoundingClientRect();
-        // const canvasSize = { width: canvasElement.width, height: canvasElement.height };
-        // const canvasElementSize = { width: canvasElementBoundingClientRect.width, height: canvasElementBoundingClientRect.height };
-        // const canvasElementRelativeCursorPosition = new Point(mouseEvent.offsetX, mouseEvent.offsetY);
-        // return new Point(
-        //     canvasSize.width / canvasElementSize.width * canvasElementRelativeCursorPosition.x,
-        //     canvasSize.height / canvasElementSize.height * canvasElementRelativeCursorPosition.y);
         return new Point(mouseEvent.offsetX, mouseEvent.offsetY);
     }
 
@@ -168,14 +161,6 @@ export class ImageColorPickerComponent implements AfterViewInit {
             Math.floor(colorComponents.a / pixelsCount)
         ];
 
-        // const colorMode = this.appSettings.colorPicker.colorMode;
-        // const isRgbaMode = colorMode === ColorMode.Rgba
-        //     ? true
-        //     : colorMode === ColorMode.Auto && color[3] < 255;
-        // const alpha = isRgbaMode ? color[3] : undefined;
-        // const rgba: [number, number, number, number | undefined] = [color[0], color[1], color[2], alpha];
-        // const hexColor = getColorHex(...rgba);
-        // const rgbColor = getColorRgb(...rgba);
         return {
             screenPosition: new Point(e.pageX, e.pageY),
             position: pixelPosition,
