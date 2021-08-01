@@ -5,6 +5,7 @@ import Pixel from "../../models/Pixel";
 import {getColorHex, getColorRgb} from "../../extensions/colors";
 import {AppSettingsService} from "../../services/app-settings/app-settings.service";
 import {ColorMode} from "../../models/ColorMode";
+import Color from "../../models/Color";
 
 @Component({
     selector: "app-image-color-picker",
@@ -167,19 +168,18 @@ export class ImageColorPickerComponent implements AfterViewInit {
             Math.floor(colorComponents.a / pixelsCount)
         ];
 
-        const colorMode = this.appSettings.colorPicker.colorMode;
-        const isRgbaMode = colorMode === ColorMode.Rgba
-            ? ColorMode.Rgba
-            : colorMode === ColorMode.Auto && color[3] < 255;
-        const alpha = isRgbaMode ? color[3] : undefined;
-        const rgba: [number, number, number, number | undefined] = [color[0], color[1], color[2], alpha];
-        const hexColor = getColorHex(...rgba);
-        const rgbColor = getColorRgb(...rgba);
+        // const colorMode = this.appSettings.colorPicker.colorMode;
+        // const isRgbaMode = colorMode === ColorMode.Rgba
+        //     ? true
+        //     : colorMode === ColorMode.Auto && color[3] < 255;
+        // const alpha = isRgbaMode ? color[3] : undefined;
+        // const rgba: [number, number, number, number | undefined] = [color[0], color[1], color[2], alpha];
+        // const hexColor = getColorHex(...rgba);
+        // const rgbColor = getColorRgb(...rgba);
         return {
             screenPosition: new Point(e.pageX, e.pageY),
             position: pixelPosition,
-            hex: hexColor,
-            rgb: rgbColor,
+            color: new Color(color[0], color[1], color[2], color[3]),
             mouseEvent: e
         };
     }

@@ -23,13 +23,15 @@
                 </label>
             </div>
         </div>
-        <div class="selected-pixels-history-wrapper d-grid justify-content-start mt-2"
+        <div class="selected-pixels-history-wrapper d-grid justify-content-start mt-3"
              style="grid-template: repeat(2, auto) / repeat(7, auto); margin-left: -0.25rem;"
              *ngIf="colorPickerImageService.selectedPixelsHistory.length > 0">
             <app-color-view *ngFor="let pixel of colorPickerImageService.selectedPixelsHistory.slice(0, 14)"
                             class="m-1"
-                            [color]="pixel.hex"
-                            [height]="30" [width]="30">
+                            style="cursor: pointer;"
+                            [color]="pixel.color.getHex(colorMode)"
+                            [height]="30" [width]="30"
+                            (click)="onHistoryColorClick(pixel)">
             </app-color-view>
         </div>
     </div>

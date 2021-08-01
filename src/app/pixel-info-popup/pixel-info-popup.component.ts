@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ComponentRef, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {ColorPickerImageService} from "../../services/color-picker-image/color-picker-image.service";
 import {AppSettingsService} from "../../services/app-settings/app-settings.service";
+import {ColorMode} from "../../models/ColorMode";
 
 @Component({
     selector: "app-pixel-info-popup",
@@ -77,5 +78,9 @@ export class PixelInfoPopupComponent implements AfterViewInit {
                 this.scaledImageSize,
                 this.scaledImageSize);
         });
+    }
+
+    public get colorMode(): ColorMode {
+        return this.appSettings.colorPicker.colorMode;
     }
 }

@@ -1,9 +1,9 @@
 import Point from "./Point";
+import Color from "./Color";
 
 export default interface Pixel {
     screenPosition: Point;
     position: Point;
-    hex: string;
-    rgb: string;
+    color: Color;
     mouseEvent: MouseEvent;
 }

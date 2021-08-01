@@ -5,12 +5,17 @@ import modals from "../Modals";
 import {AppSettingsService} from "../app-settings/app-settings.service";
 import {ColorFormat} from "../../models/ColorFormat";
 import Size from "../../models/Size";
+import {ColorMode} from "../../models/ColorMode";
 
 @Injectable({
     providedIn: "root"
 })
 export class ColorPickerImageService {
     constructor(private readonly appSettings: AppSettingsService) {
+    }
+
+    private get colorMode(): ColorMode {
+        return this.appSettings.colorPicker.colorMode;
     }
 
     private _currentImage?: string;
@@ -104,9 +109,9 @@ export class ColorPickerImageService {
             const getTextToCopy = () => {
                 switch (this.appSettings.colorPicker.autoCopyColor) {
                 case ColorFormat.Hex:
-                    return this._selectedPixel?.hex;
+                    return this._selectedPixel?.color.getHex(this.colorMode);
                 case ColorFormat.Rgb:
-                    return this._selectedPixel?.rgb;
+                    return this._selectedPixel?.color.getRgb(this.colorMode);
                 default:
                     return null;
                 }
@@ -116,10 +121,23 @@ export class ColorPickerImageService {
 
             navigator.clipboard.writeText(textToCopy).catch(console.error);
         }
-        if (this._selectedPixel != null
+        if (!this.doNotAddToHistory
+            && this._selectedPixel != null
             && (this.selectedPixelsHistory.length === 0
-                || this.selectedPixelsHistory[0].hex != this._selectedPixel.hex)) {
+                || !this.selectedPixelsHistory[0].color.equals(this._selectedPixel.color))) {
             this.selectedPixelsHistory.unshift(this._selectedPixel);
+        }
+    }
+
+    private doNotAddToHistory: boolean = false;
+
+    public setSelectedPixel(pixel: Pixel, addToHistory: boolean) {
+        if (!addToHistory) {
+            this.doNotAddToHistory = true;
+        }
+        this.selectedPixel = pixel;
+        if (!addToHistory) {
+            this.doNotAddToHistory = false;
         }
     }
 
