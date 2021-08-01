@@ -16,3 +16,12 @@
 .upload-image-modal-button {
     font-size: 1.15rem;
 }
+
+.selected-pixels-history-wrapper {
+    grid-template: repeat(2, auto) / repeat(7, auto);
+    margin-left: -0.25rem;
+}
+
+.selected-pixel-info-wrapper {
+    max-width: 100%;
+}

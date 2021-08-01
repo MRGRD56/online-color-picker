@@ -10,21 +10,10 @@
                  [width]="60" [height]="60"
                  [color]="selectedPixelColor.hex">
             </app-color-view>
-            <div class="mt-3">
-                <label>
-                    HEX
-                    <input class="form-control dark-element" type="text" [value]="selectedPixelColor.hex" readonly>
-                </label>
-            </div>
-            <div class="mt-3">
-                <label>
-                    RGB
-                    <input class="form-control dark-element" type="text" [value]="selectedPixelColor.rgb" readonly>
-                </label>
-            </div>
+            <app-color-text elementClass="mt-3" label="HEX:" [color]="selectedPixelColor.hex"></app-color-text>
+            <app-color-text elementClass="mt-3" label="RGB:" [color]="selectedPixelColor.rgb"></app-color-text>
         </div>
         <div class="selected-pixels-history-wrapper d-grid justify-content-start mt-3"
-             style="grid-template: repeat(2, auto) / repeat(7, auto); margin-left: -0.25rem;"
              *ngIf="colorPickerImageService.selectedPixelsHistory.length > 0">
             <app-color-view *ngFor="let pixel of colorPickerImageService.selectedPixelsHistory.slice(0, 14)"
                             class="m-1"

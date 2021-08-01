@@ -1,0 +1,5 @@
+input.color-text-input {
+    &:focus, &:focus-visible {
+        outline: none;
+    }
+}
