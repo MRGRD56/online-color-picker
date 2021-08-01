@@ -1,6 +1,7 @@
 <div #imageCanvasWrapper class="image-canvas-wrapper">
     <canvas #imageCanvas
             class="image-canvas"
+            [class.transparency-bg]="appSettings.colorPicker.transparencyBg"
             style="object-fit: contain; object-position: top;"
             [style.cursor]="isDragging ? 'grab' : 'crosshair'"
             (click)="canvasOnMouseClick($event)"

@@ -25,13 +25,15 @@ export class AppSettingsService {
         dragScrollingSpeed: number,
         autoCopyColor: ColorFormat | null,
         colorMode: ColorMode,
-        colorPixelsCount: number
+        colorPixelsCount: number,
+        transparencyBg: boolean
     } = {
         isInvertedDragScrolling: false,
         dragScrollingSpeed: 1,
         autoCopyColor: null,
         colorMode: ColorMode.Auto,
-        colorPixelsCount: 1
+        colorPixelsCount: 1,
+        transparencyBg: true
     }
 
     public load() {
@@ -53,6 +55,7 @@ export class AppSettingsService {
             this.colorPicker.autoCopyColor = settings.colorPicker.autoCopyColor;
             this.colorPicker.colorMode = settings.colorPicker.colorMode;
             this.colorPicker.isInvertedDragScrolling = settings.colorPicker.isInvertedDragScrolling;
+            this.colorPicker.transparencyBg = settings.colorPicker.transparencyBg;
         } catch (error) {
             this.save();
             console.warn("Failed to load settings from the localStorage, the saved settings overwritten.");

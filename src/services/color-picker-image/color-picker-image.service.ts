@@ -116,5 +116,12 @@ export class ColorPickerImageService {
 
             navigator.clipboard.writeText(textToCopy).catch(console.error);
         }
+        if (this._selectedPixel != null
+            && (this.selectedPixelsHistory.length === 0
+                || this.selectedPixelsHistory[0].hex != this._selectedPixel.hex)) {
+            this.selectedPixelsHistory.unshift(this._selectedPixel);
+        }
     }
+
+    public selectedPixelsHistory: Pixel[] = [];
 }

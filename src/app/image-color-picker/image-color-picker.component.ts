@@ -39,7 +39,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
     }
 
     constructor(private readonly colorPickerImageService: ColorPickerImageService,
-                private readonly appSettings: AppSettingsService) {
+                public readonly appSettings: AppSettingsService) {
         console.log("image-color-picker: ctor");
         window.addEventListener("mousemove", this.windowOnMouseMove);
         window.addEventListener("mouseup", this.windowOnMouseUp);
@@ -142,9 +142,8 @@ export class ImageColorPickerComponent implements AfterViewInit {
             return coordinate < 0 ? 0 : coordinate;
         };
         const getImageDataSize = (imageSize: number, pixelPositionCoordinate: number) => {
-            const c = (imageSize - 1) - (pixelPositionCoordinate + Math.ceil((colorPixelsCount - 1) / 2));
-            console.log("c", c);
-            return c > 0 ? colorPixelsCount : colorPixelsCount + c;
+            const brCornerDistance = (imageSize - 1) - (pixelPositionCoordinate + Math.ceil((colorPixelsCount - 1) / 2));
+            return brCornerDistance > 0 ? colorPixelsCount : colorPixelsCount + brCornerDistance;
         };
         const imageData = this.imageCanvasContext.getImageData(
             getImageDataSourceCoordinate(pixelPosition.x),

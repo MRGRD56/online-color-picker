@@ -8,6 +8,7 @@ import {PixelInfoPopupComponent} from "./pixel-info-popup/pixel-info-popup.compo
 import {UploadImageComponent} from "./load-image/upload-image.component";
 import {FormsModule} from "@angular/forms";
 import {NgRepeatDirective} from "../directives/ng-repeat.directive";
+import { ColorViewComponent } from './color-view/color-view.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {NgRepeatDirective} from "../directives/ng-repeat.directive";
         ImageColorPickerComponent,
         PixelInfoPopupComponent,
         UploadImageComponent,
-        NgRepeatDirective
+        NgRepeatDirective,
+        ColorViewComponent
     ],
     imports: [
         BrowserModule,

@@ -9,6 +9,7 @@
          [style.height]="elementSize.width - 2 + 'px'">
         <canvas #imageMagnifierCanvas
                 style="object-fit: fill;"
+                [class.transparency-bg]="appSettings.colorPicker.transparencyBg"
                 [width]="scaledImageSize"
                 [height]="scaledImageSize"
                 [style.width]="elementSize.width - 2 + 'px'"
