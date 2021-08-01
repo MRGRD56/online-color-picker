@@ -77,3 +77,14 @@ button.flat-btn.flat-btn-light {
 .transparency-bg {
     background: url("~src/assets/img/transparency_20_dark.png") repeat;
 }
+
+.hidden-scrollbar {
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

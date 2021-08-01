@@ -1,9 +1,13 @@
-<div class="rounded dark-element d-flex justify-content-between mx-0 p-2 {{ elementClass }}"
+<div class="rounded dark-element d-flex justify-content-start mx-0 p-2 {{ elementClass }}"
      style="border: 1px solid; {{ elementStyle }}">
-    <div class="d-flex overflow-hidden" style="flex: 1;">
-        <div class="unselectable d-flex align-items-center me-2">{{ label }}</div>
-        <input class="color-text-input d-flex align-items-center font-monospace dark-element border-0" readonly [value]="color">
+    <div class="unselectable d-flex align-items-center me-2"
+         style="width: 35px;">
+        {{ label }}
     </div>
+    <input class="color-text-input d-flex align-items-center font-monospace dark-element border-0
+                      overflow-auto hidden-scrollbar"
+           style="flex: 1;"
+           readonly [value]="color">
     <div class="col-auto d-flex align-items-center unselectable">
         <button class="flat-btn flat-btn-light material-icons unselectable" (click)="onCopyButtonClicked()">
             content_copy
