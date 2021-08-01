@@ -103,6 +103,10 @@ export class ColorPickerImageService {
     }
 
     set selectedPixel(value: Pixel | null | undefined) {
+        this.setSelectedPixel(value, true);
+    }
+
+    public setSelectedPixel(value: Pixel | null | undefined, addToHistory: boolean) {
         this._selectedPixel = value;
         this.selectedPixelChangedSubscriber?.next(value);
         if (this._selectedPixel && this.appSettings.colorPicker.autoCopyColor !== null) {
@@ -121,23 +125,11 @@ export class ColorPickerImageService {
 
             navigator.clipboard.writeText(textToCopy).catch(console.error);
         }
-        if (!this.doNotAddToHistory
+        if (addToHistory
             && this._selectedPixel != null
             && (this.selectedPixelsHistory.length === 0
                 || !this.selectedPixelsHistory[0].color.equals(this._selectedPixel.color))) {
             this.selectedPixelsHistory.unshift(this._selectedPixel);
-        }
-    }
-
-    private doNotAddToHistory: boolean = false;
-
-    public setSelectedPixel(pixel: Pixel, addToHistory: boolean) {
-        if (!addToHistory) {
-            this.doNotAddToHistory = true;
-        }
-        this.selectedPixel = pixel;
-        if (!addToHistory) {
-            this.doNotAddToHistory = false;
         }
     }
 
