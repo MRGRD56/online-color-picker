@@ -1,5 +1,10 @@
-<div #imageCanvasWrapper class="image-canvas-wrapper">
+<div #imageCanvasWrapper class="image-canvas-wrapper"
+     [class.h-100]="!colorPickerImageService.isImageLoaded"
+     [class.d-flex]="!colorPickerImageService.isImageLoaded"
+     [class.align-items-center]="!colorPickerImageService.isImageLoaded"
+     [class.justify-content-center]="!colorPickerImageService.isImageLoaded">
     <canvas #imageCanvas
+            [style.display]="colorPickerImageService.isImageLoaded ? 'block' : 'none'"
             class="image-canvas"
             [class.transparency-bg]="appSettings.colorPicker.transparencyBg"
             style="object-fit: contain; object-position: top;"
@@ -15,4 +20,5 @@
                           class="pixelated"
                           *ngIf="isMouseOverImage && !isDragging">
     </app-pixel-info-popup>
+    <app-upload-image *ngIf="!colorPickerImageService.isImageLoaded"></app-upload-image>
 </div>

@@ -39,7 +39,7 @@ export class ImageColorPickerComponent implements AfterViewInit {
         return this.appSettings.colorPicker.dragScrollingSpeed;
     }
 
-    constructor(private readonly colorPickerImageService: ColorPickerImageService,
+    constructor(public readonly colorPickerImageService: ColorPickerImageService,
                 public readonly appSettings: AppSettingsService) {
         console.log("image-color-picker: ctor");
         window.addEventListener("mousemove", this.windowOnMouseMove);
