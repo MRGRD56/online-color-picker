@@ -28,10 +28,6 @@ export class ColorPickerImageService {
         this.currentImageChangedSubscriber?.next(this._currentImage);
         if (this._currentImage) {
             modals.uploadImageModal.modal!.hide();
-            // document.querySelectorAll("div.modal-backdrop").forEach(element => {
-            //     element.removeAttribute("show");
-            //     element.remove();
-            // });
         }
     }
 

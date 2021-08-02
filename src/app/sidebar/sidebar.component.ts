@@ -3,6 +3,7 @@ import {ColorPickerImageService} from "../../services/color-picker-image/color-p
 import {AppSettingsService} from "../../services/app-settings/app-settings.service";
 import {ColorMode} from "../../models/ColorMode";
 import Pixel from "../../models/Pixel";
+import modals from "../../services/Modals";
 
 @Component({
     selector: "app-sidebar",
@@ -33,5 +34,9 @@ export class SidebarComponent {
 
     public onHistoryColorClick(pixel: Pixel) {
         this.colorPickerImageService.setSelectedPixel(pixel, false);
+    }
+
+    public onUploadImageButtonClick() {
+        modals.uploadImageModal.modal!.show();
     }
 }
