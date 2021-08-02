@@ -5,6 +5,8 @@
         "ng": "ng",
         "start": "ng serve --host 0.0.0.0",
         "build": "ng build",
+        "gh-build": "ng build --prod --base-href \"https://MRGRD56.github.io/online-color-picker/\"",
+        "gh-publish": "npx angular-cli-ghpages --dir=dist/online-color-picker",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "lint": "ng lint"
