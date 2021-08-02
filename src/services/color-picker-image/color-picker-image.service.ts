@@ -80,7 +80,9 @@ export class ColorPickerImageService {
         beforeLoading?.();
 
         const imageFile = dataTransfer.files[0];
-        this.loadFromFile(imageFile);
+        if (imageFile.type.startsWith("image/")) {
+            this.loadFromFile(imageFile);
+        }
     }
 
     public loadFromFile(file: File) {

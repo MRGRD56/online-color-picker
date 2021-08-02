@@ -5,12 +5,15 @@ import {fromEvent} from "rxjs";
     providedIn: "root"
 })
 export class FileOpenService {
-    public openFile(multiple: boolean = false): Promise<FileList> {
+    public openFile(accept: string | undefined = undefined, multiple: boolean = false): Promise<FileList> {
         const inputElement = document.createElement("input");
         inputElement.style.display = "none";
         inputElement.type = "file";
         if (multiple) {
             inputElement.setAttribute("multiple", "");
+        }
+        if (accept != undefined) {
+            inputElement.setAttribute("accept", accept);
         }
         const filesOpened$ = fromEvent<Event>(inputElement, "change");
 
