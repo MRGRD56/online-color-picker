@@ -29,7 +29,7 @@
 .app-color-text-wrapper {
     flex-direction: column;
 
-    @media screen and (min-width: 610px) {
+    @media screen and (min-width: 614px) {
         flex-direction: row;
         & app-color-text:first-of-type {
             margin-inline-end: 10px;

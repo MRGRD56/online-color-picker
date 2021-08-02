@@ -28,20 +28,27 @@ export class ColorPickerImageService {
         this.currentImageChangedSubscriber?.next(this._currentImage);
         if (this._currentImage) {
             modals.uploadImageModal.modal!.hide();
-            document.querySelectorAll("div.modal-backdrop").forEach(element => {
-                element.removeAttribute("show");
-                element.remove();
-            });
+            // document.querySelectorAll("div.modal-backdrop").forEach(element => {
+            //     element.removeAttribute("show");
+            //     element.remove();
+            // });
         }
     }
 
-    public currentImageSize?: Size;
+    private _currentImageSize?: Size;
+    public get currentImageSize(): Size | undefined {
+        return this._currentImageSize;
+    }
+
+    private set currentImageSize(value: Size | undefined) {
+        this._currentImageSize = value;
+    }
 
     private _currentImageElement?: HTMLImageElement;
-    get currentImageElement(): HTMLImageElement | undefined {
+    public get currentImageElement(): HTMLImageElement | undefined {
         return this._currentImageElement;
     }
-    set currentImageElement(value: HTMLImageElement | undefined) {
+    public set currentImageElement(value: HTMLImageElement | undefined) {
         this._currentImageElement = value;
     }
 
@@ -72,39 +79,37 @@ export class ColorPickerImageService {
     });
     private selectedPixelChangedSubscriber?: Subscriber<Pixel | null | undefined>;
 
-    public loadFromDataTransfer(dataTransfer: DataTransfer, beforeLoading: (() => void) | undefined = undefined) {
+    public loadFromDataTransfer(dataTransfer: DataTransfer) {
         if (!(dataTransfer?.files?.length)) {
             return;
         }
         this.isImageLoading = true;
-        beforeLoading?.();
 
         const imageFile = dataTransfer.files[0];
-        if (imageFile.type.startsWith("image/")) {
-            this.loadFromFile(imageFile);
-        }
+        this.loadFromFile(imageFile);
     }
 
     public loadFromFile(file: File) {
+        if (!file.type.startsWith("image/")) return;
         this.currentImage = URL.createObjectURL(file);
     }
 
     private _hoveredPixel: Pixel | null | undefined;
-    get hoveredPixel(): Pixel | null | undefined {
+    public get hoveredPixel(): Pixel | null | undefined {
         return this._hoveredPixel;
     }
 
-    set hoveredPixel(value: Pixel | null | undefined) {
+    public set hoveredPixel(value: Pixel | null | undefined) {
         this._hoveredPixel = value;
         this.hoveredPixelChangedSubscriber?.next(value);
     }
 
     private _selectedPixel: Pixel | null | undefined;
-    get selectedPixel(): Pixel | null | undefined {
+    public get selectedPixel(): Pixel | null | undefined {
         return this._selectedPixel;
     }
 
-    set selectedPixel(value: Pixel | null | undefined) {
+    public set selectedPixel(value: Pixel | null | undefined) {
         this.setSelectedPixel(value, true);
     }
 
@@ -136,4 +141,21 @@ export class ColorPickerImageService {
     }
 
     public selectedPixelsHistory: Pixel[] = [];
+
+    public renderImage(canvas: HTMLCanvasElement): void {
+        const canvasContext = canvas.getContext("2d")!;
+
+        this.currentImageElement = new Image();
+        this.currentImageElement.addEventListener("load", () => {
+            canvas.width = this.currentImageElement!.width;
+            canvas.height = this.currentImageElement!.height;
+            this.currentImageSize = {
+                width: canvas.width,
+                height: canvas.height
+            };
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            canvasContext.drawImage(this.currentImageElement!, 0, 0);
+        });
+        this.currentImageElement.src = this.currentImage!;
+    }
 }

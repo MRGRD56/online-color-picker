@@ -55,20 +55,8 @@ export class ImageColorPickerComponent implements AfterViewInit {
             throw this.imageCanvas;
         }
 
-        this.colorPickerImageService.currentImageChanged$.subscribe(imageUrl => {
-            this.colorPickerImageService.currentImageElement = new Image();
-            this.colorPickerImageService.currentImageElement.addEventListener("load", () => {
-                this.imageCanvas.width = this.colorPickerImageService.currentImageElement!.width;
-                this.imageCanvas.height = this.colorPickerImageService.currentImageElement!.height;
-                //FIXME: make colorPickerImageService.currentImageSize private
-                this.colorPickerImageService.currentImageSize = {
-                    width: this.imageCanvas.width,
-                    height: this.imageCanvas.height
-                };
-                this.imageCanvasContext.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
-                this.imageCanvasContext.drawImage(this.colorPickerImageService.currentImageElement!, 0, 0);
-            });
-            this.colorPickerImageService.currentImageElement.src = imageUrl;
+        this.colorPickerImageService.currentImageChanged$.subscribe(_ => {
+            this.colorPickerImageService.renderImage(this.imageCanvas);
         });
     }
 
