@@ -39,6 +39,7 @@ app-sidebar {
     border-bottom: 1px solid #37474f;
 
     @media (min-width: 992px) {
+        border-bottom: none;
         border-right: 1px solid #37474f;
     }
 }
